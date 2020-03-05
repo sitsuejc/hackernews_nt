@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CoreApi.Interfaces;
+using CoreApi.Models.HackerNews;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -28,24 +30,27 @@ namespace CoreApi.Managers
 		/// <returns></returns>
 		public async Task<List<int>> GetBestStoryIds()
 		{
-			// Generate and execute the API request
-			IRestResponse response = await ExecuteGet($"{BaseUrl}/beststories.json?{_printParam}");
+			return await ExecuteGet<List<int>>($"{BaseUrl}/beststories.json?{_printParam}");
+		}
+
+		public async Task<Story> GetStoryDetails(int storyId)
+		{
+			return await ExecuteGet<Story>($"{BaseUrl}/item/{storyId}.json?{_printParam}");
+		}
+
+		private async Task<T> ExecuteGet<T>(string url)
+		{
+			RestClient client = new RestClient(url);
+			RestRequest request = new RestRequest(Method.GET);
+			IRestResponse response = await client.ExecuteAsync(request);
+
 			if (!response.IsSuccessful)
 			{
 				// TODO: Log the error
 				Console.WriteLine(response.Content);
-				return null;
+				return default;
 			}
-
-			// The API returns an array of numbers, so deserialize to that
-			return JsonConvert.DeserializeObject<List<int>>(response.Content);
-		}
-
-		private async Task<IRestResponse> ExecuteGet(string url)
-		{
-			RestClient client = new RestClient(url);
-			RestRequest request = new RestRequest(Method.GET);
-			return await client.ExecuteAsync(request);
+			return JsonConvert.DeserializeObject<T>(response.Content);
 		}
 	}
 }
