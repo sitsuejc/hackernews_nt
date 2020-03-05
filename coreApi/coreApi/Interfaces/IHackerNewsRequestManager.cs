@@ -9,5 +9,6 @@ namespace CoreApi.Interfaces
 	{
 		Task<List<int>> GetBestStoryIds();
 		Task<Story> GetStoryDetails(int storyId);
+		Task<List<Story>> GetBestStories();
 	}
 }

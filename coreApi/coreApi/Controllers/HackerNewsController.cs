@@ -33,10 +33,30 @@ namespace CoreApi.Controllers
 			return Ok(ids);
 		}
 
+		/// <summary>
+		/// Return the details for the given story.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		[HttpGet("StoryDetails/{id}")]
 		public async Task<ActionResult<Story>> GetStoryDetails(int id)
 		{
 			return Ok(await _hackerNewsRequestManager.GetStoryDetails(id));
+		}
+
+		/// <summary>
+		/// Return a list of (fully-resolved) Best Stories on Hacker News.
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("BestStories")]
+		public async Task<ActionResult<List<Story>>> GetBestStories()
+		{
+			List<Story> stories = await _hackerNewsRequestManager.GetBestStories();
+			if (stories == null)
+			{
+				return BadRequest();
+			}
+			return Ok(stories);
 		}
 	}
 }
