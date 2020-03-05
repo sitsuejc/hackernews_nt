@@ -1,18 +1,65 @@
 .wrapper {
-  padding: 24px 0;
+  // Account for toolbar
+  height: calc(100% - 64px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  overflow: auto;
+
+  &.loading {
+    justify-content: center;
+    align-content: center;
+  }
 }
 
+// Flex the header so title/search are better positioned
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+// Style the search input field so it
+// better fits within the toolbar
+::ng-deep .search-form {
+  color: rgba(0, 0, 0, .87);
+
+  .mat-form-field {
+    // centers it within toolbar
+    height: 62px;
+
+    .mat-form-field-flex {
+      height: 56px;
+    }
+
+    // Widen it out and center text within input field
+    .mat-form-field-infix {
+      width: 320px;
+      padding: 4px 0;
+    }
+  }
+}
+
+// Fix the background color given our theme
+::ng-deep .search-form .mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
+  border-radius: 5px;
+}
+
+// Style the cards that contain the Best Story information
 mat-card {
   display: flex;
   flex-direction: column;
 
+  // Spacing between each card
   margin: 16px;
+
+  // Size constraints
   min-width: 320px;
   max-width: 320px;
+  min-height: 188px;
+  max-height: 188px;
 
+  // Pushes it down so it is aligned across all cards
   mat-card-content {
     display: flex;
     flex-direction: column;
@@ -22,6 +69,7 @@ mat-card {
     flex: 1;
   }
 
+  // Push the button to the right
   mat-card-actions {
       display: flex;
       justify-content: flex-end;

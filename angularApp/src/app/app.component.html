@@ -1,8 +1,22 @@
 <mat-toolbar color="primary">
   <span>{{ appTitle }}</span>
+
+  <!-- Search form - reactive -->
+  <form class="search-form">
+    <mat-form-field appearance="outline" floatLabel="never">
+      <input matInput
+             [formControl]="searchField"
+             placeholder="Search stories (by title)"
+      >
+    </mat-form-field>
+  </form>
 </mat-toolbar>
 
-<div class="wrapper">
+<div class="wrapper loading" *ngIf="loading">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div class="wrapper" *ngIf="!loading">
   <mat-card *ngFor="let story of bestStories">
     <mat-card-header>
       <mat-card-title>
