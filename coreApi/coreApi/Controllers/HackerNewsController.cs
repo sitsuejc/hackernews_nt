@@ -58,5 +58,17 @@ namespace CoreApi.Controllers
 			}
 			return Ok(stories);
 		}
+
+		[HttpGet("BestStories/{searchText}")]
+		public async Task<ActionResult<List<Story>>> GetBestStories(string searchText)
+		{
+			List<Story> stories = await _hackerNewsRequestManager.GetBestStories(searchText);
+			if (stories == null)
+			{
+				return BadRequest();
+			}
+			return Ok(stories);
+		}
+
 	}
 }
