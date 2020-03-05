@@ -33,9 +33,38 @@ namespace CoreApi.Managers
 			return await ExecuteGet<List<int>>($"{BaseUrl}/beststories.json?{_printParam}");
 		}
 
+		/// <summary>
+		/// Returns the story details for the provided ID.
+		/// </summary>
+		/// <param name="storyId"></param>
+		/// <returns></returns>
 		public async Task<Story> GetStoryDetails(int storyId)
 		{
 			return await ExecuteGet<Story>($"{BaseUrl}/item/{storyId}.json?{_printParam}");
+		}
+
+		/// <summary>
+		/// Returns the details for each story based on the Best Stories from Hacker News.
+		/// </summary>
+		/// <returns></returns>
+		public async Task<List<Story>> GetBestStories()
+		{
+			// Need all the IDs first
+			List<int> bestStoryIds = await GetBestStoryIds();
+			if (bestStoryIds == null)
+			{
+				return null;
+			}
+
+			// Query to resolve details for each story. ToArray executes the query
+			var queries = 
+				from id in bestStoryIds select GetStoryDetails(id);
+
+			// ToArray executes the query
+			var executingQueries = queries.ToArray();
+
+			// Execute the requests in parallel, waiting for all to finish before returning
+			return (await Task.WhenAll(executingQueries)).ToList();
 		}
 
 		private async Task<T> ExecuteGet<T>(string url)
