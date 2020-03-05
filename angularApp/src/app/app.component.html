@@ -1,15 +1,26 @@
-<mat-toolbar color="primary" class="mat-elevation-z2">
-  <span>{{ appTitle }}</span>
+<ng-template #searchForm>
+    <form class="search-form">
+      <mat-form-field appearance="outline" floatLabel="never">
+        <input matInput
+               [formControl]="searchField"
+               placeholder="Search stories (by title)"
+        >
+      </mat-form-field>
+    </form>
+</ng-template>
 
-  <!-- Search form - reactive -->
-  <form class="search-form">
-    <mat-form-field appearance="outline" floatLabel="never">
-      <input matInput
-             [formControl]="searchField"
-             placeholder="Search stories (by title)"
-      >
-    </mat-form-field>
-  </form>
+<mat-toolbar color="primary" class="desktop mat-elevation-z2">
+  <span>{{ appTitle }}</span>
+  <ng-template [ngTemplateOutlet]="searchForm"></ng-template>
+</mat-toolbar>
+
+<mat-toolbar color="primary" class="mobile mat-elevation-z2">
+  <mat-toolbar-row>
+    {{ appTitle }}
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <ng-template [ngTemplateOutlet]="searchForm"></ng-template>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <!-- Loading state -->

@@ -1,6 +1,13 @@
+$max-mobile-width: 599px;
+$min-desktop-width: $max-mobile-width + 1;
+
+$desktop-toolbar-height: 64px;
+$mobile-toolbar-height: 56px;
+$double-toolbar-height-mobile: $mobile-toolbar-height * 2;
+
 .wrapper {
   // Account for toolbar
-  height: calc(100% - 64px);
+  height: calc(100% - #{$desktop-toolbar-height});
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -18,10 +25,39 @@
   }
 }
 
+// Adjust height of wrapper based on screen size
+.wrapper {
+  @media (max-width: $max-mobile-width) {
+    height: calc(100% - #{$double-toolbar-height-mobile});
+  }
+}
+
 // Flex the header so title/search are better positioned
 mat-toolbar {
   display: flex;
   justify-content: space-between;
+}
+
+// Desktop specific styles for toolbar
+@media (min-width: $min-desktop-width) {
+  mat-toolbar.mobile {
+    display: none;
+  }
+}
+
+// Mobile specific styles for toolbar
+@media (max-width: $max-mobile-width) {
+  mat-toolbar.desktop {
+    display: none;
+  }
+  mat-toolbar.mobile {
+    mat-toolbar-row {
+      justify-content: center;
+    }
+    .search-form {
+      width: 100%;
+    }
+  }
 }
 
 // Style the search input field so it
@@ -39,13 +75,25 @@ mat-toolbar {
 
     // Widen it out and center text within input field
     .mat-form-field-infix {
-      width: 320px;
+      width: 288px;
       padding: 0;
       font-size: 18px;
     }
   }
 }
 
+// Mobile specific for search field
+@media (max-width: $max-mobile-width) {
+  ::ng-deep .search-form {
+    .mat-form-field {
+      width: 100%;
+
+      .mat-form-field-infix {
+        width: 100%;
+      }
+    }
+  }
+}
 // Fix the background color given our theme
 ::ng-deep .search-form .mat-form-field-appearance-outline .mat-form-field-outline {
   background-color: white;
