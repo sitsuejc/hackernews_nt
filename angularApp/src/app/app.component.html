@@ -12,11 +12,23 @@
   </form>
 </mat-toolbar>
 
+<!-- Loading state -->
 <div class="wrapper loading" *ngIf="loading">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
 
-<div class="wrapper" *ngIf="!loading">
+<!-- Done loading, but no results -->
+<div class="wrapper empty" *ngIf="!loading && !bestStories.length">
+  <span class="mat-headline">
+    No results found
+  </span>
+  <span class="mat-title">
+    Try adjusting your search text
+  </span>
+</div>
+
+<!-- Done loading, and we have stories to display -->
+<div class="wrapper" *ngIf="bestStories.length">
   <mat-card *ngFor="let story of bestStories">
     <mat-card-header>
       <mat-card-title>
