@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreApi.Interfaces;
@@ -58,7 +57,7 @@ namespace CoreApi.Managers
 			}
 
 			// Query to resolve details for each story. ToArray executes the query
-			var queries = 
+			var queries =
 				from id in bestStoryIds select GetStoryDetails(id);
 
 			// ToArray executes the query
@@ -86,7 +85,11 @@ namespace CoreApi.Managers
 
 		private async Task<T> ExecuteGet<T>(string url)
 		{
-			RestClient client = new RestClient(url);
+			RestClient client = new RestClient(url)
+			{
+				CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.Default)
+			};
+
 			RestRequest request = new RestRequest(Method.GET);
 			IRestResponse response = await client.ExecuteAsync(request);
 
