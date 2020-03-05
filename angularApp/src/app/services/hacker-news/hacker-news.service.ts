@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Story } from 'src/app/models/hacker-news/story.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class HackerNewsService {
   ) { }
 
   private get baseAPIUrl(): string {
-    return `${window.location.origin}/coreapi/api/hackernews`;
+    return `${environment.apiRoot}/hackernews`;
   }
 
   private get bestStoriesUrl(): string {
