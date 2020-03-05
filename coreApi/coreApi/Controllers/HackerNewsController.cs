@@ -23,6 +23,7 @@ namespace CoreApi.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet("BestStoryIds")]
+		[ResponseCache(CacheProfileName = "Cache30Seconds")]
 		public async Task<ActionResult<IEnumerable<int>>> GetBestStoryIds()
 		{
 			List<int> ids = await _hackerNewsRequestManager.GetBestStoryIds();
@@ -39,6 +40,7 @@ namespace CoreApi.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet("StoryDetails/{id}")]
+		[ResponseCache(CacheProfileName = "Cache30Seconds")]
 		public async Task<ActionResult<Story>> GetStoryDetails(int id)
 		{
 			return Ok(await _hackerNewsRequestManager.GetStoryDetails(id));
@@ -49,6 +51,7 @@ namespace CoreApi.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet("BestStories")]
+		[ResponseCache(CacheProfileName = "Cache30Seconds")]
 		public async Task<ActionResult<List<Story>>> GetBestStories()
 		{
 			List<Story> stories = await _hackerNewsRequestManager.GetBestStories();
