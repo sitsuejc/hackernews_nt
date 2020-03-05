@@ -29,4 +29,13 @@ export class HackerNewsService {
     return this.httpClient.get(this.bestStoriesUrl) as Observable<Story[]>;
   }
 
+  /**
+   * Return an observable that contains the Best Stories from Hacker News, filtered by search
+   * text on the story titles. Search is case-insensitive.
+   */
+  public searchBestStories(searchText: string): Observable<Story[]> {
+    // TODO: Handle errors
+    return this.httpClient.get(`${this.bestStoriesUrl}/${searchText}`) as Observable<Story[]>;
+  }
+
 }
