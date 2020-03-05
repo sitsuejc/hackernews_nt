@@ -1,4 +1,5 @@
 ﻿using CoreApi.Interfaces;
+using CoreApi.Models.HackerNews;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,6 +31,12 @@ namespace CoreApi.Controllers
 				return BadRequest();
 			}
 			return Ok(ids);
+		}
+
+		[HttpGet("StoryDetails/{id}")]
+		public async Task<ActionResult<Story>> GetStoryDetails(int id)
+		{
+			return Ok(await _hackerNewsRequestManager.GetStoryDetails(id));
 		}
 	}
 }
