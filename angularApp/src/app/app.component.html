@@ -28,7 +28,7 @@
 </div>
 
 <!-- Done loading, and we have stories to display -->
-<div class="wrapper" *ngIf="bestStories.length">
+<div class="wrapper" *ngIf="!loading && bestStories.length">
   <mat-card *ngFor="let story of bestStories">
     <mat-card-header>
       <mat-card-title>
