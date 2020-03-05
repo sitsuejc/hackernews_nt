@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreApi.Interfaces;
@@ -65,6 +66,22 @@ namespace CoreApi.Managers
 
 			// Execute the requests in parallel, waiting for all to finish before returning
 			return (await Task.WhenAll(executingQueries)).ToList();
+		}
+
+		/// <summary>
+		/// Filters Best Stories from Hacker News against the provided search text. Only the title is used as a filter and is case-insensitive.
+		/// </summary>
+		/// <param name="searchText"></param>
+		/// <returns></returns>
+		public async Task<List<Story>> GetBestStories(string searchText)
+		{
+			List<Story> stories = await GetBestStories();
+			if (string.IsNullOrEmpty(searchText))
+			{
+				return stories;
+			}
+
+			return stories.Where(s => s.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
 		}
 
 		private async Task<T> ExecuteGet<T>(string url)
