@@ -31,16 +31,17 @@ mat-toolbar {
 
   .mat-form-field {
     // centers it within toolbar
-    height: 62px;
+    height: 56px;
 
     .mat-form-field-flex {
-      height: 56px;
+      height: 48px;
     }
 
     // Widen it out and center text within input field
     .mat-form-field-infix {
       width: 320px;
-      padding: 4px 0;
+      padding: 0;
+      font-size: 18px;
     }
   }
 }
