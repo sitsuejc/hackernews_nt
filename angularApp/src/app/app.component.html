@@ -2,4 +2,27 @@
   <span>{{ appTitle }}</span>
 </mat-toolbar>
 
+<div class="wrapper">
+  <mat-card *ngFor="let story of bestStories">
+    <mat-card-header>
+      <mat-card-title>
+        {{ story.title }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        By: {{ story.by }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+        The score for this story is: <b>{{ story.score }}</b>
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-button color="accent">MORE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
 <router-outlet></router-outlet>
