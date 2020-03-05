@@ -37,7 +37,22 @@ namespace CoreApi
 				options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAll"));
 			});
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			// Add caching (in-memory and response)
+			services.AddMemoryCache();
+			services.AddResponseCaching();
+
+			services.AddMvc(options =>
+				{
+					// Setup a 30 second cache profile
+					options.CacheProfiles.Add("Cache30Seconds",
+						new CacheProfile()
+						{
+							Duration = 30,
+							Location = ResponseCacheLocation.Any
+						}
+					);
+				}
+			).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 			services.AddScoped<IHackerNewsRequestManager, HackerNewsRequestManager>();
 		}
 
@@ -53,6 +68,7 @@ namespace CoreApi
 				app.UseHsts();
 			}
 
+			app.UseResponseCaching();
 			app.UseHttpsRedirection();
 			app.UseMvc();
 			app.UseCors("AllowAll");
