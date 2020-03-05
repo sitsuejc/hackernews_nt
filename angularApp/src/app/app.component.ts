@@ -11,7 +11,7 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public appTitle = 'Nextech - Hacker News';
+  public appTitle = 'Hacker News - Best Stories';
   public bestStories: Story[] = [];
   public searchField: FormControl = new FormControl();
   public loading = false;
