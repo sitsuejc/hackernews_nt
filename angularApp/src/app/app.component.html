@@ -1,3 +1,4 @@
+<!-- Make the search form a template so we can reuse it -->
 <ng-template #searchForm>
     <form class="search-form">
       <mat-form-field appearance="outline" floatLabel="never">
@@ -9,11 +10,13 @@
     </form>
 </ng-template>
 
+<!-- Desktop toolbar -->
 <mat-toolbar color="primary" class="desktop mat-elevation-z2">
   <span>{{ appTitle }}</span>
   <ng-template [ngTemplateOutlet]="searchForm"></ng-template>
 </mat-toolbar>
 
+<!-- Mobile toolbar -->
 <mat-toolbar color="primary" class="mobile mat-elevation-z2">
   <mat-toolbar-row>
     {{ appTitle }}
@@ -57,7 +60,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-button color="accent">MORE</button>
+      <button mat-button color="accent" disabled="true">MORE</button>
     </mat-card-actions>
   </mat-card>
 </div>

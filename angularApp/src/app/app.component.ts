@@ -56,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private showBestStories(searchText: string = ''): Subscription {
     this.loading = true;
+    this.bestStories = [];
     return this.hackerNewsService.searchBestStories(searchText).subscribe(
       this.onStoriesLoaded.bind(this),
       console.error
@@ -63,7 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private onStoriesLoaded(stories: Story[]): void {
-    this.bestStories = stories;
+    this.bestStories = stories.filter(s => typeof s.title === 'string');
     this.loading = false;
   }
 
